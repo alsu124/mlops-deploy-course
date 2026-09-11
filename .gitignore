@@ -49,6 +49,8 @@ docs/lecture-00-helper-notes.md
 docs/lecture-00-introduction.md
 docs/TOOLS_detailed-guide.md
 docs/TEACHER_track-students.md
+lessons/*/plan.md
+lessons/plan.md
 
 # Bot and internal tools (not for public repo)
 /bot/
@@ -62,3 +64,6 @@ bot/
 # Temporary
 *.tmp
 .cache/
+data/students.json
+bot.log
+bot/admins.json
