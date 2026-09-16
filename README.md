@@ -24,7 +24,6 @@
 | [docs/announcement.md](docs/announcement.md) | Готовые тексты для рассылки группе |
 | [docs/setup.md](docs/setup.md) | Установка окружения (Windows / macOS / Linux) |
 | [docs/assessment.md](docs/assessment.md) | Зачёт: требования, критерии, чек-лист защиты |
-| [docs/teacher-guide.md](docs/teacher-guide.md) | Как вести курс: тайминг пары, типовые сбои, план Б |
 | [docs/workflow.md](docs/workflow.md) | Раздача заданий и приём ДЗ: три уровня проверки |
 | [bot/](bot/) | Телеграм-бот курса: выдаёт задания, принимает и проверяет работы |
 | [lessons/](lessons/) | По папке на занятие: `plan.md` (преподавателю) + `handout.md` (студенту) |
@@ -42,7 +41,6 @@ FastAPI · Docker + docker-compose · MinIO · Prometheus + Grafana · Evidently
 
 1. Перед семестром: пройти [docs/setup.md](docs/setup.md) на машине аудитории, прогнать
    `reference-project/` целиком (`make all`) — это проверка, что стенд жив.
-   Затем поднять бота по [bot/README.md](bot/README.md) и раздать группе ссылку.
 2. Перед парой: прочитать `lessons/NN-*/plan.md` (там тайминг, демо-скрипт и типовые ошибки).
 3. Материалы студентам раздаёт бот: `/theory N` — конспект к занятию,
    `/task N` — методичка и список «что сдать».
