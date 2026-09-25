@@ -213,7 +213,7 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 │   ├── models/
 │   └── reports/
 │
-├── reference-project/              # ✅ ЭТАЛОННОЕ РЕШЕНИЕ
+│   (эталонное решение — в приватном репозитории, см. ниже)
 │   ├── ... (вся структура как выше)
 │   └── Полностью готовый, работающий проект
 │
@@ -251,7 +251,7 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 # 1. Читаете lecture-00-introduction.md
 # 2. Читаете course-roadmap.md
 # 3. Читаете docs/setup.md (ставите окружение)
-# 4. Запускаете reference-project/: make all
+# 4. Запускаете эталон (mlops-deploy-course-reference): make all
 # 5. Поднимаете бота: python -m bot.main
 # 6. Проверяете что всё работает
 # 7. Раздаёте студентам ссылку на шаблон и бота
@@ -262,7 +262,7 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 ```bash
 # Преподаватель:
 # 1. Читает lessons/NN-*/plan.md (тайминг)
-# 2. Показывает демо из reference-project/
+# 2. Показывает демо: python tools/make_demo_repo.py
 # 3. Раздаёт /task N через бота
 
 # Студент:
@@ -308,13 +308,13 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 
 **Для студента:**
 - Проверьте **quick-start.md** → раздел "Быстрые решения ошибок"
-- Посмотрите **reference-project/** → как это сделано правильно
+- Спросите преподавателя или напишите в группу → если непонятно, как сделать
 - Напишите преподавателю с полным текстом ошибки
 
 **Для преподавателя:**
 - Проверьте **course-roadmap.md** → раздел "Кризисные точки"
 - Прочитайте **teacher-guide.md** → типичные сбои
-- Запустите **reference-project/: make all** → если проект работает, то окружение ОК
+- Запустите **make check** в своём проекте → если печатает `environment: OK`, окружение в порядке
 
 ---
 
@@ -325,7 +325,7 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 - [ ] Прочитать lecture-00-introduction.md
 - [ ] Прочитать course-roadmap.md
 - [ ] Установить окружение (docs/setup.md)
-- [ ] Запустить reference-project/ целиком (make all)
+- [ ] Запустить эталон целиком (make all) — приватный репозиторий mlops-deploy-course-reference
 - [ ] Поднять бота (bot/README.md)
 - [ ] Проверить что бот отвечает на команды
 - [ ] Подготовить шаблон (template/) для раздачи студентам
@@ -341,7 +341,7 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 ### Перед каждым занятием:
 
 - [ ] Прочитать lessons/NN-*/plan.md (тайминг)
-- [ ] Подготовить демо из reference-project/
+- [ ] Подготовить демо: python tools/make_demo_repo.py
 - [ ] Убедиться что все требования понятны
 - [ ] Приготовить ответы на типичные вопросы (в плане)
 
@@ -405,7 +405,7 @@ python tools/make_lecture02_demos.py   # антипримеры -> /tmp/bad-repo
 1. assessment.md — критерии и вопросы
 
 **В чрезвычайной ситуации:**
-1. reference-project/ — посмотрите как это должно работать
+1. Методичка занятия — раздел «Что сдать»
 2. course-roadmap.md → раздел "Кризисные точки"
 
 ---

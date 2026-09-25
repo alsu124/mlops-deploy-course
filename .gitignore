@@ -57,6 +57,12 @@ lessons/plan.md
 demo/
 tools/
 
+# Эталонное решение всего курса — ответы ко всем лабораторным.
+# Живёт в приватном репозитории alsu124/mlops-deploy-course-reference,
+# локальная копия остаётся у преподавателя, но в публичный репозиторий
+# не выкладывается.
+reference-project/
+
 # Bot and internal tools (not for public repo)
 /bot/
 bot/
