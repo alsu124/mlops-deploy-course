@@ -76,7 +76,6 @@ bot/admins.json
 # Teacher-only documentation
 docs/TEACHER_*.md
 docs/TEACHER_*.html
-docs/setup.md
 docs/workflow.md
 bot/README_TEACHER.md
 lessons/*/plan.md
