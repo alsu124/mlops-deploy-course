@@ -14,6 +14,16 @@
 
 Итоговый проект и есть допуск к зачёту.
 
+## 🎓 Для студентов
+
+**НАЧНИ ОТСЮДА:** [**HOW_TO_SUBMIT_LABS.md**](HOW_TO_SUBMIT_LABS.md) — полная инструкция как выполнять и сдавать лабы
+
+Также полезно:
+- [STUDENT_GIT_GUIDE.md](STUDENT_GIT_GUIDE.md) — полное руководство по Git
+- [GIT_CHEATSHEET.md](GIT_CHEATSHEET.md) — краткая шпаргалка по Git
+- [SETUP_BY_OS.md](SETUP_BY_OS.md) — установка Git для твоей ОС
+- [docs/setup.md](docs/setup.md) — установка окружения Python
+
 ## Навигация
 
 | Раздел | Что внутри |
@@ -24,10 +34,9 @@
 | [docs/announcement.md](docs/announcement.md) | Готовые тексты для рассылки группе |
 | [docs/setup.md](docs/setup.md) | Установка окружения (Windows / macOS / Linux) |
 | [docs/assessment.md](docs/assessment.md) | Зачёт: требования, критерии, чек-лист защиты |
-| [docs/workflow.md](docs/workflow.md) | Раздача заданий и приём ДЗ: три уровня проверки |
 | [bot/](bot/) | Телеграм-бот курса: выдаёт задания, принимает и проверяет работы |
-| [lessons/](lessons/) | По папке на занятие: `plan.md` (преподавателю) + `handout.md` (студенту) |
-| [template/](template/) | Стартовый скелет проекта — студенты форкают его на занятии 1 |
+| [lessons/](lessons/) | По папке на занятие: `handout.md` (задание для студента) |
+| [template/](template/) | Стартовый скелет проекта — студенты клонируют его |
 | [reference-project/](reference-project/) | Эталонное решение целиком — ответ преподавателя |
 
 ## Стек
