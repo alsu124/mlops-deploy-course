@@ -45,24 +45,3 @@ Python 3.11 · Git · pre-commit + ruff · DVC · MLflow · pytest · GitHub Act
 FastAPI · Docker + docker-compose · MinIO · Prometheus + Grafana · Evidently · Prefect
 
 Всё open-source, ставится локально, работает без облачного бюджета.
-
-## Как пользоваться репозиторием преподавателю
-
-1. Перед семестром: пройти [docs/setup.md](docs/setup.md) на машине аудитории, прогнать
-   `reference-project/` целиком (`make all`) — это проверка, что стенд жив.
-2. Перед парой: прочитать `lessons/NN-*/plan.md` (там тайминг, демо-скрипт и типовые ошибки).
-3. Материалы студентам раздаёт бот: `/theory N` — конспект к занятию,
-   `/task N` — методичка и список «что сдать».
-4. ДЗ принимает бот (`/submit N`), сводка — `/report N`, ведомость — `/export`.
-   Подробно: [docs/workflow.md](docs/workflow.md).
-
-## Проверка проекта одной командой
-
-Тот же чек-лист, что у бота, работает из терминала — и у преподавателя,
-и у студента:
-
-```bash
-python -m bot.checker --path .                    # все занятия
-python -m bot.checker --path . --lesson 11        # одно занятие
-python -m bot.checker --repo <url> --lesson 9 --gh
-```
