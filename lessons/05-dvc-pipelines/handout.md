@@ -201,6 +201,59 @@ cat reports/eval_metrics.json
 Метрики должны совпасть с вашими до третьего знака. Если совпали — у вас
 воспроизводимый пайплайн. Это половина курса.
 
+## Шаг 7. Стадия валидации данных
+
+Ваш пайплайн сейчас обучит модель на чём угодно. Придёт выгрузка,
+где половина `monthly_charges` — нули, и `dvc repro` спокойно отработает.
+Поставим заслон между подготовкой и обучением.
+
+Создайте `src/data/validate.py`. Скрипт читает `data/processed/train.csv`
+и **завершается кодом 1**, если нарушено хоть одно правило:
+
+```python
+CHECKS = {
+    "строк не меньше минимума":    lambda df, p: len(df) >= p["min_rows"],
+    "доля пропусков в норме":      lambda df, p: df.isna().mean().max() <= p["max_missing_share"],
+    "доля оттока осмысленна":      lambda df, p: p["target_rate"][0] < df[TARGET].mean() < p["target_rate"][1],
+    "нет дублей по клиенту":       lambda df, p: not df["customer_id"].duplicated().any(),
+    "стаж в допустимом диапазоне": lambda df, p: df["tenure_months"].between(0, 200).all(),
+}
+```
+
+Пороги — в `params.yaml`, не в коде:
+
+```yaml
+validate:
+  min_rows: 5000
+  max_missing_share: 0.05
+  target_rate: [0.05, 0.60]
+```
+
+Скрипт печатает результат каждой проверки и пишет `reports/validation.json`
+с перечнем пройденного и упавшего.
+
+Вставьте стадию в `dvc.yaml` **между** prepare и train:
+
+```yaml
+  validate:
+    cmd: python -m src.data.validate
+    deps:
+      - src/data/validate.py
+      - data/processed/train.csv
+    params:
+      - validate
+    metrics:
+      - reports/validation.json:
+          cache: false
+```
+
+И допишите `reports/validation.json` в зависимости стадии `train` —
+тогда обучение не запустится, пока валидация не прошла.
+
+Проверьте, что заслон работает: временно поставьте `min_rows: 999999`,
+запустите `dvc repro` и убедитесь, что пайплайн остановился на validate
+и до обучения не дошёл.
+
 ## Что сдать
 
 - [ ] `dvc.yaml` с четырьмя стадиями и корректными `deps`
@@ -209,6 +262,8 @@ cat reports/eval_metrics.json
 - [ ] `dvc.lock` закоммичен
 - [ ] `dvc metrics diff HEAD~1` показывает изменение
 - [ ] Пайплайн воспроизводится на чистом клоне
+- [ ] Стадия `validate` в пайплайне, обучение зависит от её результата
+- [ ] Показано, что при нарушении порога `dvc repro` останавливается до обучения
 
 ## Домашнее задание (1,5–2 ч)
 
