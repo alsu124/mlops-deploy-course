@@ -56,11 +56,10 @@ git add .                          # (но не data/ и models/!)
 git commit -m "Lesson N: complete"
 git push origin lesson-N/description
 
-# На GitHub создаём PR
-# Пишем боту: /submit N
 ```
 
-**ВАЖНО:** Никогда не коммитим в `main`! Только через PR!
+**ВАЖНО:** Отдельно сдавать лабу не нужно — достаточно запушить.
+Весь проект сдаётся лично в конце семестра.
 
 ---
 
@@ -184,8 +183,6 @@ make train && diff /tmp/m1.json reports/metrics.json
 # 4. Git push
 git push origin lesson-N/description
 
-# 5. Сдача боту
-# /submit N
 ```
 
 ---
@@ -218,8 +215,8 @@ git push origin lesson-N/description
 
 ```
 ПЕРЕД ЗАНЯТИЕМ (вечер перед, 30 мин)
-├─ Читаете /theory N (конспект)
-└─ Смотрите /task N (что делать)
+├─ Читаете конспект docs/theory/
+└─ Смотрите lessons/NN-*/handout.md (что делать)
 
 НА ЗАНЯТИИ (2 часа)
 ├─ Делаете основную работу по методичке
@@ -227,12 +224,11 @@ git push origin lesson-N/description
 
 ДОМА ПОСЛЕ ЗАНЯТИЯ (1.5-2 часа)
 ├─ Доделываете домашнее задание
-├─ Запускаете /check N (проверяете)
+├─ Сверяетесь с разделом «Что сдать» в методичке
 └─ Коммитите и пушите
 
-ПЕРЕД СДАЧЕЙ
-├─ Запускаете python -m bot.checker --path . --lesson N
-└─ Пишите боту /submit N
+В КОНЦЕ СЕМЕСТРА
+└─ Показываете весь проект лично на зачёте
 ```
 
 ---

@@ -34,7 +34,6 @@
 | [docs/announcement.md](docs/announcement.md) | Готовые тексты для рассылки группе |
 | [docs/setup.md](docs/setup.md) | Установка окружения (Windows / macOS / Linux) |
 | [docs/assessment.md](docs/assessment.md) | Зачёт: требования, критерии, чек-лист защиты |
-| [bot/](bot/) | Телеграм-бот курса: выдаёт задания, принимает и проверяет работы |
 | [lessons/](lessons/) | По папке на занятие: `handout.md` (задание для студента) |
 | [template/](template/) | Стартовый скелет проекта — студенты клонируют его |
 | Эталонное решение | Приватный репозиторий `alsu124/mlops-deploy-course-reference` — доступ только у преподавателя |
