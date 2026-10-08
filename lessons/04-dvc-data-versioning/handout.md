@@ -47,14 +47,17 @@ dvc add data/raw/churn.csv
 
 ```bash
 cat data/raw/churn.csv.dvc
-cat data/raw/.gitignore
 ```
 
 В `.dvc`-файле — хеш (`md5`), размер и путь. Это и есть то, что едет в Git.
-DVC заодно дописал сам CSV в `.gitignore`, чтобы вы случайно его не закоммитили.
+
+Сам CSV при этом остаётся вне Git: в `.gitignore` шаблона стоит `/data/**`,
+а рядом — исключение `!/data/**/*.dvc`. Содержимое игнорируется, указатели
+DVC — нет. Обычно DVC дописывает собственный `.gitignore` в папку с данными,
+но здесь ему нечего добавлять: файл уже исключён.
 
 ```bash
-git add data/raw/churn.csv.dvc data/raw/.gitignore
+git add data/raw/churn.csv.dvc
 git commit -m "Добавить сырые данные под DVC"
 ```
 
@@ -89,7 +92,7 @@ ls -lh data/raw/churn.csv
 ```bash
 make prepare && make train
 dvc add models/model.joblib
-git add models/model.joblib.dvc models/.gitignore
+git add models/model.joblib.dvc
 git commit -m "Добавить модель под DVC"
 dvc push
 ```
