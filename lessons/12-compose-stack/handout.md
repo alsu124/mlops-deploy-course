@@ -104,7 +104,7 @@ volumes:
 
 ```yaml
   minio:
-    image: minio/minio:latest
+    image: cgr.dev/chainguard/minio:latest  # minio/minio ушёл с Docker Hub и quay.io (см. занятие 4)
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"
@@ -292,7 +292,9 @@ docker stats --no-stream
 ## Домашнее задание (1,5–2 ч)
 
 1. Добавьте сервис-инициализатор, который сам создаёт бакет `mlflow`
-   в MinIO при старте стенда (образ `minio/mc`, команда `mc mb`).
+   в MinIO при старте стенда (образ `bitnamilegacy/minio-client`, команда
+   `mc mb` — у Chainguard свой `mc`-образ закрыт логином, а у Bitnami он
+   тянется анонимно).
    Стенд должен подниматься на чистой машине без ручных действий.
 2. Вынесите пароли из compose-файла в `.env` (файл в `.gitignore`),
    положите рядом `.env.example`. Проверьте, что стенд поднимается.
