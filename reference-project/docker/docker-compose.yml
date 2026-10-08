@@ -61,7 +61,7 @@ services:
       retries: 10
 
   minio:
-    image: minio/minio:latest
+    image: cgr.dev/chainguard/minio:latest  # minio/minio ушёл с Docker Hub и quay.io в 2026
     command: server /data --console-address ":9001"
     ports:
       - "9000:9000"

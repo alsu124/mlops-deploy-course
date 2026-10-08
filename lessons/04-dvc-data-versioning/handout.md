@@ -130,10 +130,18 @@ dvc checkout
 
 Локальная папка не работает для команды. Поднимем настоящее хранилище:
 
+> ⚠️ В сентябре 2026 MinIO убрал образы `minio/minio` и `minio/mc` с Docker
+> Hub, а через пару недель закрыл анонимный доступ и к своему зеркалу на
+> quay.io — там теперь нужен логин. Готовый образ с регистрацией и
+> лицензионным ключом называется MinIO AIStor — для учебных целей он
+> избыточен. Используем пересборку того же community-кода без лицензии и
+> логина — образ от Chainguard: он собирается из исходников MinIO,
+> тянется анонимно и принимает те же флаги и переменные окружения.
+
 ```bash
 docker run -d --name minio -p 9000:9000 -p 9001:9001 \
   -e MINIO_ROOT_USER=minioadmin -e MINIO_ROOT_PASSWORD=minioadmin \
-  minio/minio server /data --console-address ":9001"
+  cgr.dev/chainguard/minio server /data --console-address ":9001"
 ```
 
 Откройте http://localhost:9001 (minioadmin / minioadmin) и создайте
