@@ -260,7 +260,7 @@ docker stats --no-stream
 
 ```yaml
   minio-init:
-    image: minio/mc:latest
+    image: bitnamilegacy/minio-client:latest  # minio/mc ушёл с Docker Hub, у Chainguard mc закрыт логином
     depends_on:
       minio:
         condition: service_healthy
