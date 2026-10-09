@@ -107,6 +107,16 @@ dvc repro
 **`cache: false` у метрик** означает, что маленькие JSON-файлы едут прямо
 в Git. Так `dvc metrics diff` умеет сравнивать метрики между коммитами.
 
+Модель теперь тоже выход стадии, поэтому `.dvc`-файл из занятия 4 надо убрать —
+иначе DVC откажется работать: один и тот же путь описан в двух местах.
+
+```bash
+dvc remove models/model.joblib.dvc
+```
+
+Если пропустить, `dvc repro` скажет:
+`output 'models/model.joblib' is specified in: train, models/model.joblib.dvc`
+
 ## Шаг 3. Запуск и наблюдение
 
 ```bash
@@ -166,9 +176,15 @@ dvc metrics diff HEAD~1
 в `reports/roc.json`:
 
 ```python
+from sklearn.metrics import roc_curve   # к остальным импортам evaluate.py
+
+# y_test и proba — те же переменные, по которым вы считаете метрики
 fpr, tpr, _ = roc_curve(y_test, proba)
-step = max(1, len(fpr) // 200)
-json.dump([{"fpr": float(a), "tpr": float(b)} for a, b in zip(fpr[::step], tpr[::step])], f)
+step = max(1, len(fpr) // 200)          # 200 точек хватает для графика
+points = [{"fpr": float(a), "tpr": float(b)} for a, b in zip(fpr[::step], tpr[::step])]
+
+with open(resolve("reports/roc.json"), "w", encoding="utf-8") as f:
+    json.dump(points, f, indent=2)
 ```
 
 и опишите в стадии `evaluate`:
