@@ -43,7 +43,7 @@ python -m src.train
 
 В UI: Models → `churn-classifier` → Version 3 → Stage → **Transition to Production**.
 
-Три стадии и их смысл:
+Четыре стадии и их смысл:
 
 | Стадия | Что означает |
 |---|---|
@@ -57,9 +57,18 @@ python -m src.train
 
 ## Шаг 3. Загрузка по имени
 
-Создайте `src/service/model_loader.py`:
+Создайте `src/service/model_loader.py`. Начните с импортов — во фрагменте
+ниже используются `load_params`, `resolve`, `joblib` и логгер:
 
 ```python
+import joblib
+
+from src.config import load_params, resolve
+from src.logging_setup import setup_logging
+
+log = setup_logging()
+
+
 class ModelHolder:
     def __init__(self) -> None:
         self.model = None
@@ -184,21 +193,36 @@ model = mlflow.sklearn.load_model(f"models:/{name}@champion")
 
 Сверяйте её при загрузке:
 
+Сигнатуру берут не у самой модели: `mlflow.sklearn.load_model` возвращает
+обычный sklearn-объект, у него нет `.metadata` — будет `AttributeError`.
+Запрашивайте её у MLflow по тому же URI, которым грузили модель:
+
 ```python
-schema = self.model.metadata.get_input_schema()
-expected = set(feature_columns(load_params()))
-actual = {c.name for c in schema.inputs}
-if actual != expected:
-    raise RuntimeError(
-        f"сигнатура разошлась с конфигом: "
-        f"лишние {actual - expected}, недостающие {expected - actual}"
-    )
+import mlflow
+from src.config import feature_columns, load_params
+
+def check_signature(self, model_uri: str) -> None:
+    signature = mlflow.models.get_model_info(model_uri).signature
+    if signature is None:
+        log.warning("у модели нет сигнатуры — обучите с input_example")
+        return
+
+    expected = set(feature_columns(load_params()))
+    actual = {c.name for c in signature.inputs.inputs}
+    if actual != expected:
+        raise RuntimeError(
+            f"сигнатура разошлась с конфигом: "
+            f"лишние {actual - expected}, недостающие {expected - actual}"
+        )
 ```
+
+У локального фолбэка сигнатуры нет вовсе — `joblib.load` отдаёт только
+объект. Это ещё один довод не считать фолбэк равноценной заменой реестру.
 
 Зачем: однажды вы добавите признак в `params.yaml`, забудете переобучить,
 и сервис начнёт кормить старую модель другим набором колонок. Без этой
 проверки он не упадёт — он начнёт выдавать неверные предсказания
-в правильном формате. Ровно тот тихий отказ, о котором шла речь
+в правильном формате. Ровно тот тихий отказ, о котором пойдёт речь
 на занятии 8.
 
 Проверьте: добавьте фиктивный признак в `params.yaml`, перезапустите
@@ -208,7 +232,7 @@ if actual != expected:
 
 - [ ] Модель зарегистрирована, ≥ 3 версии
 - [ ] Одна версия в `Production`, одна в `Archived`
-- [ ] `model_loader.py` грузит по `models:/имя/Production` с фолбэком
+- [ ] `model_loader.py` грузит модель из реестра с фолбэком на локальный файл
 - [ ] Продемонстрирован откат на предыдущую версию
 - [ ] `docs/model-promotion.md` написан
 - [ ] Модель грузится по алиасу `@champion`, фолбэк сохранён
@@ -218,7 +242,9 @@ if actual != expected:
 
 1. Добавьте в `model_loader` метод, возвращающий подробности версии:
    номер, дату регистрации, `git_sha` исходного прогона.
-   Подсказка: `mlflow.MlflowClient().get_latest_versions(name, stages=["Production"])`.
+   Подсказка: `MlflowClient().get_model_version_by_alias(name, "champion")`
+   — у `get_latest_versions` со стадиями docstring помечен как deprecated,
+   и он про стадии, от которых мы ушли в шаге 7.
 2. Напишите скрипт `scripts/promote.py`, который сам сравнивает
    кандидата с текущей продовой версией на тестовой выборке и переводит
    в `Production`, только если ROC-AUC выше хотя бы на 0.005.
